@@ -79,7 +79,32 @@ The environment is considered solved, when the average (over 100 episodes) of th
   This command will produce the `reacher20/actor_checkpoint.pth` and `reacher20/critic_checkpoint.pth` file.
 
 ```
-
+Unity Academy name: Academy
+        Number of Brains: 1
+        Number of External Brains : 1
+        Lesson number : 0
+        Reset Parameters :
+		goal_speed -> 1.0
+		goal_size -> 5.0
+Unity brain name: ReacherBrain
+        Number of Visual Observations (per agent): 0
+        Vector Observation space type: continuous
+        Vector Observation space size (per agent): 33
+        Number of stacked Vector Observation: 1
+        Vector Action space type: continuous
+        Vector Action space size (per agent): 4
+        Vector Action descriptions: , , ,
+Episode 10	Average Score: 0.98
+Episode 20	Average Score: 1.95
+Episode 30	Average Score: 8.89
+Episode 40	Average Score: 15.68
+Episode 50	Average Score: 20.19
+Episode 60	Average Score: 23.20
+Episode 70	Average Score: 25.29
+Episode 80	Average Score: 26.51
+Episode 90	Average Score: 27.49
+Episode 100	Average Score: 27.78
+Episode 110	Average Score: 30.26
 ```
 
 2. Testing the Agent
