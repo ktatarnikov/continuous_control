@@ -8,8 +8,8 @@ dependencies:
   - pytorch=1.6.0
   - cudatoolkit=10.1
   - torchvision=0.7.0
+  - tensorflow==2.2
   - pip:
-    - tensorflow==1.7.1
     - Pillow>=4.2.1
     - matplotlib
     - numpy>=1.11.0
