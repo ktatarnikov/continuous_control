@@ -1,5 +1,7 @@
 [//]: # (Image References)
 
+[image1]: cc-control-demo.gif "Trained Agent"
+
 # Project 2: Continuous Control
 
 ### Introduction
@@ -114,6 +116,8 @@ Episode 110	Average Score: 30.26
   ```
 
 3. The implementation of multi agent, actor/critic networks and and single agent version are exactly the same.
+
+## Udacity Instructions
 
 ### Getting Started
 

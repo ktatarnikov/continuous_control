@@ -27,9 +27,6 @@ class TrainRunner:
         ======
             n_episodes (int): maximum number of training episodes
             max_t (int): maximum number of timesteps per episode
-            eps_start (float): starting value of epsilon, for epsilon-greedy action selection
-            eps_end (float): minimum value of epsilon
-            eps_decay (float): multiplicative factor (per episode) for decreasing epsilon
         """
 
         scores_deque = deque(maxlen=100)
