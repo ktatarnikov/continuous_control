@@ -10,10 +10,10 @@
 
 <style type="text/css">
     pre { line-height: 125%; margin: 0; }
-td.linenos pre { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
-span.linenos { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
-td.linenos pre.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+td.linenos pre { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
+td.linenos pre.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 .highlight .hll { background-color: var(--jp-cell-editor-active-background) }
 .highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
 .highlight .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */
@@ -14750,12 +14750,22 @@ Episode 9 - Average Score: 36.06, StdDev: 2.081097980968364
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The agent is implemented using DDPG algorithm with two deep networks - actor and critic.</p>
-<p>The actor is a policy network - it takes state and outputs actions.</p>
-<p>The critic network takes the state and action from actor and outputs Q value.</p>
-<p>In order to stabilize learning I've created local and target networks for both actor and critic. The soft update between local and target is executed 10 times every 20 steps (based on the description in "Benchmark implementation" section of the project).</p>
-<p>The exploration is done using random noise introduced into chosen action using Ornstein-Uhlenbeck process. The magnitude of exploration noise is continiously reduced to minimal value 0.01.</p>
-<p>To keep training experience I am using replay buffer and uniform experience sampling.</p>
+<p>For solving The Reacher environment I've selected DDPG method - Deep deterministic policy gradient <a href="https://arxiv.org/pdf/1509.02971.pdf">DDPG</a> from google deep mind.</p>
+<p>DDPG method an off-policy method and is an adaptation of DQN for continous action spaces. DDPG extends DQN by applying actor-critic schema from <a href="http://proceedings.mlr.press/v32/silver14.pdf">DPG method</a>. 
+This complication is needed because DQN cannot be applied directly to continous domain as it assumes discrete low dimenstional action space and relies on estimating action-value function that in continous case requires iterative optimization process on every step.</p>
+<p>In DQN optimal action is selected using argmax over all Q values of all actions. In order to stabilize learning DQN applies two innovations:</p>
+<ul>
+<li>experience replay where training is done using sampling from reply buffer to minimize correlations between samples</li>
+<li>local and target networks used to provide consistent tagets during temporal difference backups</li>
+</ul>
+<p>DPG introduces deterministic gradient computation using actor-critic. In DPG optimal action is selected by actor policy network that takes the environment as input and outputs the best action. In addition to actor network there is also critic policy network. The critic network estimates Q value base on environment state and action chosen by the actor network.</p>
+<p>DDPG implements the same actor-critic schema where both actor and critic have DQN-like local and target pairs. As mentioned early this helps giving consistent targets and stabilizes learning process.
+Thus the critic network is updated using mean squared bellman error loss of Q-values between target and local networks. The actor network is updated using sampled policy gradient.</p>
+<p>The local-target update happens periodically.</p>
+<p>Due to deterministic gradient we need to add extra mechanism to ensure enough exploration. Thus the random noise introduced into chosen action using Ornstein-Uhlenbeck process. The magnitude of exploration noise is continiously reduced.</p>
+<p>DDPG Algorithm. (Image source: <a href="https://arxiv.org/pdf/1509.02971.pdf">DDPG</a>)
+<img src="./DDPG.png?=100px" alt="DDPG Algorithm"></p>
+<p>Below I give more details about the architecture of the networks.</p>
 <p>The <strong>Actor</strong> network has the following layers:</p>
 <ul>
 <li>Input - state</li>
